@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>quiz</title>
+   
+</head>
+
+<body>
+
+    <div class="quiz-container">
+       
+           <h1> Quiz de perguntas e respostas</h1>
+     
+        <div id="pergunta"></div>
+        <div id="opcoes"></div>
+        <div id="resultado"></div>
+
+
+    </div>
+
+    <script>
+        const perguntas = [
+            {
+                pergunta: "Quais são os protagonistas masculinos da serie?",
+                opcoes: ['sheldon é o unico protagonista', "sheldon leonard howar rajesh", "sheldon rajed stuart", "sheldon stuart rajesh"],
+                resposta: "sheldon leonard howar rajesh"
+            },
+
+            {
+                pergunta: "quantas temporadas tem a serie?",
+                opcoes: ['uma com varios epsodios', "10", "12", "15"],
+                resposta: "12"
+            },
+
+            {
+                pergunta: "Com quem o protagonista sheldon se casa?",
+                opcoes: ['penny', "leonard", "bernadette", "amy"],
+                resposta: "amy"
+            },
+            {
+                pergunta: "Qual o número perfeito ou melhor numero segundo a sheldon cooper?",
+                opcoes: ['15', "333", "73", "201"],
+                resposta: "73"
+            },
+            {
+                pergunta: "Qual é o unico persongem (dos principais) que termina sem um romance?",
+                opcoes: ['rajesh', "penny", "lucy", "stuart"],
+                resposta: "rajeh"
+            }
+
+
+
+        ];
+
+        const perguntaElemento = document.getElementById("pergunta");
+        const opcoesElemento = document.getElementById("opcoes");
+        const resultadoElemento = document.getElementById("resultado");
+
+        let indicePerguntaAtual = 0;
+
+        function carregarPergunta() {
+            const perguntaAtual = perguntas[indicePerguntaAtual];
+            perguntaElemento.textContent = perguntaAtual.pergunta;
+
+            opcoesElemento.innerHTML = "";
+            perguntaAtual.opcoes.forEach(opcao => {
+                const botao = document.createElement("button");
+                botao.textContent = opcao;
+                botao.addEventListener("click", () => verificarResposta(opcao));
+                opcoesElemento.appendChild(botao);
+            });
+        }
+
+        function verificarResposta(respostaSelecionada) {
+            const perguntaAtual = perguntas[indicePerguntaAtual];
+            if (respostaSelecionada === perguntaAtual.resposta) {
+                resultadoElemento.textContent = "resposta correta!";
+                resultadoElemento.className = "correto";
+            } else {
+                resultadoElemento.textContent = "resposta incorreta.A resposta correta é:" + perguntaAtual.resposta;
+                resultadoElemento.className = " incorreto";
+            }
+            //avaça para a proxima  pergunta ou finaliza o quiz 
+            indicePerguntaAtual++;
+            if (indicePerguntaAtual < perguntas.length) {
+                setTimeout(carregarPergunta, 2000); //carrega proxima pergunta apos 2 segundos
+            } else {
+                resultadoElemento.textContent = "quiz concluido";
+                resultadoElemento.className = "";
+            }
+        }
+        //carrega a primeira pergunta quando a pagina carrega 
+        carregarPergunta();
+    </script>
+
+</body>
+
+</html>
